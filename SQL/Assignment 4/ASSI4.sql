@@ -37,13 +37,13 @@ INSERT INTO DEPARTMENT            (LEADER_ID, DEPARTMENT_NUMBER, DEPARTMENT_NAME
 VALUES                            (   1,             1,               'A'       ),
 								  (   2,             2,               'B'       ),
 								  (   3,             3,               'C'       ),
-								  (   4,             1,               'A'       ),
-								  (   5,             2,               'B'       ),
-                                  (   6,             3,               'C'       ),
-                                  (   7,             1,               'A'       ),
-                                  (   8,             2,               'B'       ),
-								  (   9,             4,               'D'       ),
-                                  (  10,             4,               'D'       );
+								  (   4,             4,               'D'       ),
+								  (   5,             5,               'E'       ),
+                                  (   6,             6,               'F'       ),
+                                  (   7,             7,               'G'       ),
+                                  (   8,             8,               'H'       ),
+								  (   9,             9,               'J'       ),
+                                  (  10,            10,               'K'       );
                           
 INSERT INTO EMPLOYEE_TABLE   (EMPLOYEE_NUMBER, EMPLOYEE_NAME,       DEPARTMENT_NUMBER)
 VALUES                       (        1,       'HA VAN TIEN',           1        ),
@@ -58,54 +58,45 @@ VALUES                       (        1,       'HA VAN TIEN',           1       
                              (       10,       'TRAN CUNG HOAN',        4        ); 
 
 INSERT INTO EMPLOYEE_SKILL_TABLE   (EMPLOYEE_NUMBER,     SKILL_CODE,         DATE_REGISTERED       )
-VALUES                       (        1,                     'JAVA',           '1990-1-1'          ),
-                             (        2,                   'PYTHON',           '1991-3-2'          ),
-                             (        3,                       'C#',           '1992-4-3'          ),
-                             (        4,                     'TEST',           '1992-5-6'          ),
-                             (        5,                 'HTML,CSS',           '1991-5-4'          ),
-                             (        6,                     'JAVA',           '1993-7-6'          ),
-                             (        1,                      'PHP',           '1990-1-1'          ),
-                             (        8,                     'TEST',           '1990-9-8'          ),
-                             (        9,                     'JAVA',           '1993-10-9'         ),
-                             (       10,                     'TEST',           '1994-11-10'        ); 
+VALUES                       (		  1,                     'JAVA',           '1990-1-1'          ),
+                             (		  2,                   'PYTHON',           '1991-3-2'          ),
+                             (		  3,                       'C#',           '1992-4-3'          ),
+                             (		  4,                     'TEST',           '1992-5-6'          ),
+                             (		  5,                 'HTML,CSS',           '1991-5-4'          ),
+                             (		  6,                     'JAVA',           '1993-7-6'          ),
+                             (		  1,                      'PHP',           '1990-1-1'          ),
+                             (		  8,                     'TEST',           '1990-9-8'          ),
+                             (		  9,                     'JAVA',           '1993-10-9'         ),
+                             (		 10,                     'TEST',           '1994-11-10'        ); 
                              
 -- Question 3: Viết lệnh để lấy ra danh sách nhân viên (name) có skill Java.
-SELECT        E.EMPLOYEE_NUMBER, E.EMPLOYEE_NAME, D.SKILL_CODE
-FROM          EMPLOYEE_TABLE E 
-JOIN          EMPLOYEE_SKILL_TABLE D ON E.EMPLOYEE_NUMBER=D.EMPLOYEE_NUMBER
-WHERE         SKILL_CODE ='JAVA';
+SELECT 
+    E.EMPLOYEE_NUMBER, E.EMPLOYEE_NAME, D.SKILL_CODE
+FROM
+    EMPLOYEE_TABLE E
+        JOIN
+    EMPLOYEE_SKILL_TABLE D ON E.EMPLOYEE_NUMBER = D.EMPLOYEE_NUMBER
+WHERE
+    SKILL_CODE = 'JAVA';
 
 -- Question 4: Viết lệnh để lấy ra danh sách các phòng ban có >3 nhân viên
-SELECT        C.DEPARTMENT_NUMBER, E.EMPLOYEE_NAME, COUNT(*)
-FROM          DEPARTMENT C
-JOIN          EMPLOYEE_TABLE E ON C.DEPARTMENT_NUMBER=E.DEPARTMENT_NUMBER 
-GROUP BY      E.EMPLOYEE_NAME
-HAVING        COUNT(*) >= 3;
 
--- Cách 2 xem xét lại
 SELECT        C.DEPARTMENT_NUMBER, 
               GROUP_CONCAT(E.EMPLOYEE_NAME SEPARATOR ',')      AS LIST_EMPLOY,
-              COUNT(E.EMPLOYEE_NAME)
+              COUNT(E.EMPLOYEE_NAME)                           
 FROM          DEPARTMENT C
 JOIN          EMPLOYEE_TABLE E ON C.DEPARTMENT_NUMBER=E.DEPARTMENT_NUMBER 
 GROUP BY      C.DEPARTMENT_NUMBER
 HAVING        COUNT(E.EMPLOYEE_NAME) >= 3;
 
 -- Question 5: Viết lệnh để lấy ra danh sách nhân viên của mỗi văn phòng ban.
-SELECT        C.DEPARTMENT_NUMBER, C.DEPARTMENT_NAME, E.EMPLOYEE_NAME
-FROM          DEPARTMENT C
-JOIN          EMPLOYEE_TABLE E ON C.DEPARTMENT_NUMBER=E.DEPARTMENT_NUMBER 
-GROUP BY      E.EMPLOYEE_NAME
-ORDER BY      C.DEPARTMENT_NUMBER;
 
--- Cách 2 xem xét lại
-SELECT        C.DEPARTMENT_NUMBER, C.DEPARTMENT_NAME, E.EMPLOYEE_NAME, 
+SELECT        C.DEPARTMENT_NUMBER, C.DEPARTMENT_NAME,
               GROUP_CONCAT(E.EMPLOYEE_NAME SEPARATOR ',')      AS LIST_EMPLOY,
               COUNT(E.EMPLOYEE_NAME)
 FROM          DEPARTMENT C
 JOIN          EMPLOYEE_TABLE E ON C.DEPARTMENT_NUMBER=E.DEPARTMENT_NUMBER 
 GROUP BY      C.DEPARTMENT_NUMBER
-having        COUNT(E.EMPLOYEE_NAME)
 ORDER BY      C.DEPARTMENT_NUMBER ASC;
 
 -- Question 6: Viết lệnh để lấy ra danh sách nhân viên có > 1 skills.
