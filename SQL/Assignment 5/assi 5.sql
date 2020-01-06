@@ -49,7 +49,6 @@ ORDER BY c.Name ASC
 
 -- Question 3: Lấy ra các trường: SalesOrderID, OrderDate, SalesPersonID, BusinessEntityID ,Bonus, SalesYTD
              -- Từ Bảng SalesOrderHeader và SalesPerson   
-
 SELECT 
     o.SalesOrderID,
     o.OrderDate,
@@ -63,7 +62,6 @@ FROM
     salesperson p ON o.SalesPersonID = p.SalesPersonID;
     
 -- Question 4:  Sử dụng câu query, thêm cột JobTitle và xóa cột SalesPersonID và BusinessEntityID. 
-
 SELECT 
     o.SalesOrderID,
     o.OrderDate,
